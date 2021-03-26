@@ -1,13 +1,7 @@
 #!/usr/bin/env node
 
-const input = process.argv.slice(2);
-if (input.length % 2 === 0) {
-  console.error(`Invalid arguments. Expected "2 + 4" or "5 + 2 * 3 / 8"`);
-  process.exit(9);
-}
-// else if length is 1, split it using symbols.
+const input = getInput();
 
-console.log(input);
 let result = parseNumber(input[0]);
 for (let i = 1; i < input.length; i += 2) {
   let symbol = parseSymbol(input[i]);
@@ -18,10 +12,25 @@ console.log(result);
 
 
 
+function getInput() {
+  let input = process.argv.slice(2);
+  if (input.length === 1) {
+    // If user didn't put spaces between args: (1+3*2/9)
+    let n = input[0].match(/[0-9]+|\+|\-|\*|\/|\%/g);
+    input = n;
+  } else if (input.length % 2 === 0) {
+    // If there are an even amount of arguments, there is probably a symbol after a number. Can't calculate this: (1 + 2 + ).
+    console.error(`Invalid arguments. The expected format is:  "2 + 4 - 1 \* 3" or "2+4-1*3"`);
+    process.exit(9);
+  }
+  return input;
+}
+
 function parseSymbol(str) {
   if (str === "+" || str === "-" || str === "*" || str === "/" || str === "%")
     return str;
-  console.error(`Expected a symbol (+, -, *, /, or %), but received: ${str}... Note for multiplication (*), you must escape the wildcard symbol as /*`);
+  console.error(`Expected a symbol (+, -, *, /, or %), but received: ${str}.
+  Note for multiplication (*), you must escape the wildcard symbol as /*`);
   process.exit(9);
 }
 
