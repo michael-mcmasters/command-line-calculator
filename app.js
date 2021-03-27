@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
-const args = getInput();
+const args = getUserInput();
 const result = calculateResult(args);
 console.log(result);
 
 
-// Get args user passed from the CLI.
-function getInput() {
+// Get input user passed from CLI. Return args.
+function getUserInput() {
   let argsArr = process.argv.slice(2);
   if (argsArr.length === 1) {
     // If user didn't put spaces between args: (1+3*2/9).
@@ -19,7 +19,7 @@ function getInput() {
   return argsArr;
 }
 
-// Loop every other index starting at index 1. Get symbol and number after it.
+// Loops every other index starting at index 1. Gets symbol and the number after it. Calculates and returns final result.
 // 1 (+ 2) (- 3) (* 4) (/ 5).
 function calculateResult(args) {
   let result = parseNumber(args[0]);
