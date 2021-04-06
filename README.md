@@ -1,6 +1,6 @@
 # command-line-calculator
 
-A simple calculator that you can run in the terminal.
+Made with Node. A simple calculator that you can run in the terminal.
 
 ## Download
 ```
